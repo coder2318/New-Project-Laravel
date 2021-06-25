@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 //Route::get('/products', 'ProductController@index')->name('product.index');
 //Route::post('/product', 'ProductController@store')->name('product.store');
-                 
+                         
 Route::resource('product', 'ProductController')->middleware('auth:web');
 
 Auth::routes();
