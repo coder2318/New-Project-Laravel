@@ -56,6 +56,9 @@ class ProductController extends Controller
     {
         $category  = Category::get();
         return view('product.create', compact('category'));
+
+
+        
     }
 
     /**
