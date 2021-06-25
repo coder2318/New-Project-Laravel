@@ -58,6 +58,9 @@ class ProductController extends Controller
         return view('product.create', compact('category'));
 
 
+
+
+
         
     }
 
