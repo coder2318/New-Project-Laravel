@@ -31,6 +31,12 @@ class ProductController extends Controller
         $user = Auth::guard()->user();
         Product::onlyTrashed()->restore();
         auth()->user();
+
+
+
+
+
+
         $products = Product::with('category');
 //        session()->forget('message');
         if($request->name){
