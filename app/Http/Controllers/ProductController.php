@@ -30,7 +30,18 @@ class ProductController extends Controller
         $user = auth()->user();
         $user = Auth::guard()->user();
         Product::onlyTrashed()->restore();
-        auth()->user();
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -43,6 +54,8 @@ class ProductController extends Controller
             $change_name=   Str::correctPhone($request->name);
             $products = $products->where('name', 'like', '%'.$change_name.'%');
         }
+        auth()->user();
+
         $products = $products->orderBy('id', 'desc')->paginate(16);
         return view('product.index', compact('products', 'user'));
     }
