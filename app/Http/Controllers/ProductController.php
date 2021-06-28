@@ -30,16 +30,9 @@ class ProductController extends Controller
         $user = auth()->user();
         $user = Auth::guard()->user();
         Product::onlyTrashed()->restore();
-        auth()->user();
-
-
-
-
-
-
         $products = Product::with('category');
-//        session()->forget('message');
         if($request->name){
+            \auth()->user();
             $change_name=   Str::correctPhone($request->name);
             $products = $products->where('name', 'like', '%'.$change_name.'%');
         }
