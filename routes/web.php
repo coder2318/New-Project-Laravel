@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/github/redirect', 'LoginSocialiteController@githubRedirect')->name('github.redirect');
+Route::get('/github/callback', 'LoginSocialiteController@githubCallback')->name('github.callback');
+
+Route::get('/google/redirect', 'LoginSocialiteController@googleRedirect')->name('google.redirect');
+Route::get('/google/callback', 'LoginSocialiteController@googleCallback')->name('google.callback');
 //Route::get('/products', 'ProductController@index')->name('product.index');
 //Route::post('/product', 'ProductController@store')->name('product.store');
 
@@ -29,3 +34,4 @@ Route::post('send-to-mail', 'SendMailController@send')->name('sendToMail');
 Route::post('check', 'SendMailController@check')->name('check-code');
 Route::post('change-password', 'SendMailController@changePassword')->name('change-password');
 Route::get('/home', 'HomeController@index')->name('home');
+

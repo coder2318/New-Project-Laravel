@@ -7,19 +7,18 @@ use App\Events\EventOne;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
 use App\Product;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-
     public function __construct()
     {
 //        $this->middleware(['auth'])->only('create');
 
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,34 +26,13 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $user = auth()->user();
         $user = Auth::guard()->user();
         Product::onlyTrashed()->restore();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $products = Product::with('category');
-//        session()->forget('message');
         if($request->name){
             $change_name=   Str::correctPhone($request->name);
             $products = $products->where('name', 'like', '%'.$change_name.'%');
         }
-        auth()->user();
 
         $products = $products->orderBy('id', 'desc')->paginate(16);
         return view('product.index', compact('products', 'user'));
@@ -156,5 +134,67 @@ class ProductController extends Controller
         $product->forceDelete();
         session(['message' => 'Muvaffaqiyatli ochirildi']);
         return back();
+    }
+
+    /*
+     * s => single responsibility
+     * o => open/close
+     * l => Liskov
+     * i => interface segregation
+     * d => dependency inversion
+     *
+     *
+     * DRY => don't repeat youself
+     */
+
+
+}
+
+class car {
+    public function getName(){}
+
+    public function getPrice(){}
+}
+
+$object = new car();
+$object->getName();
+
+interface shakl{
+    function aylana();
+    function uchburchak();
+    function  beshburchak();
+}
+
+
+class doira extends base implements aylana, fdsf {
+    function aylana(){
+
+    }
+    function uchburchk(){
+        $this->store();
+    }
+
+
+}
+
+class UCHBURCHAK implements shakl {
+    function aylana(){
+        return "AYLANA";
+    }
+    function uchburchak(){}
+    function  beshburchak(){}
+}
+
+interface aylana{
+    function aylana();
+}
+
+interface fdsf{
+    function uchburchk();
+}
+
+ class base{
+   public  function store(){
+
     }
 }

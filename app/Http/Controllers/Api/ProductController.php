@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\ProductService;
 use App\Http\Requests\Product\{StoreRequest, UpdateRequest};
 use App\Http\Resources\ProductResource;
 use App\Product;
@@ -11,34 +12,33 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    protected $service;
+
+    public function __construct(ProductService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index(Request $request)
     {
-        $products = Product::query()->with('category');
-        if($request->name){
-            $products = $products->where('name', 'like', '%'.$request->name.'%');
-        }
-        $products = $products->get();
-//        $products= null;
+        $products = $this->service->get($request);
         if($products){
             $products = ProductResource::collection($products);
             return response()->successJson($products);
         } else{
             return response()->errorJson('product not found', 404);
-
         }
     }
 
     public function store(StoreRequest $request)
     {
-        $params = $request->validated();
-        $product = Product::create($params);
+        $product = $this->service->create($request);
         return response()->json(['product' => $product]);
     }
 
     public function update(UpdateRequest $request, Product $product)
     {
-        $params = $request->validated();
-        $product = $product->update($params);
+        $product = $this->service->edit($product, $request);
         return response()->successJson($product);
     }
 
